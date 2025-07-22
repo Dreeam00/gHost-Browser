@@ -2,97 +2,108 @@
 
 ![IFoxer Icon](IFoxer-Photoroom.png)
 
-**IFoxer** は、C# と .NET 9 をベースに開発された、カスタマイズ性と学習のしやすさを重視したオープンソースの軽量ウェブブラウザです。最新のウェブ標準をサポートする `WebView2` をレンダリングエンジンとして採用し、モダンなブラウジング体験を提供します。このプロジェクトは、Windows Forms アプリケーション開発の学習教材として、また、自分だけのブラウザを作りたいと考える開発者のための出発点となることを目指しています。
+**IFoxer** is an open source lightweight web browser developed based on C# and .NET 9, with an emphasis on customizability and ease of learning. It uses `WebView2` as a rendering engine that supports the latest web standards and provides a modern browsing experience. This project aims to be a learning material for Windows Forms application development and a starting point for developers who want to create their own browser.
 
 ---
 
-## ✨ 主な機能
+## ✨ Main features
 
-IFoxerは、標準的なウェブブラウザが持つべき基本的な機能を網羅しつつ、カスタマイズの余地を残しています。
+IFoxer covers the basic functions that a standard web browser should have, while leaving room for customization.
 
-*   **タブブラウジング**:
-    *   直感的なタブの追加、切り替え、クローズ機能。
-    *   ドラッグ＆ドロップによるタブの順序変更。
-    *   マウスのミドルクリックによるタブクローズ。
+* **Tab browsing**:
+* Intuitive tab addition, switching, and closing functions.
+* Change the order of tabs by dragging and dropping.
+* Close tabs by middle-clicking the mouse.
 
-*   **ブックマーク管理**:
-    *   現在表示しているページを簡単にお気に入りとして登録。
-    *   ブックマークの一覧表示と、そこからのページ遷移。
+* **Bookmark management**:
+* Easily register the currently displayed page as a favorite.
+* Display a list of bookmarks and transition to pages from there.
 
-*   **閲覧履歴とダウンロード管理**:
-    *   過去に訪れたサイトを追跡し、いつでも再アクセス可能。
-    *   ウェブからのファイルダウンロードとその履歴を管理。
-
-*   **高度なカスタマイズ**:
-    *   **検索エンジン**: Google, Bing, DuckDuckGoなど、お好みの検索エンジンにいつでも切り替え可能。
-    *   **テーマカラー**: アプリケーションのアクセントカラーを自由に変更し、自分だけのデザインを楽しめます。
-
----
-
-## 💻 技術スタック
-
-このプロジェクトは、以下の技術を組み合わせて構築されています。
-
-*   **C# 12 & .NET 9**: アプリケーションのコアロジックを担う、最新のC#と.NETフレームワーク。
-*   **Windows Forms**: デスクトップアプリケーションとしてのUIを構築。
-*   **Microsoft Edge WebView2**: Microsoft Edge (Chromium) をベースとしたレンダリングエンジン。HTML, CSS, JavaScriptを高速かつ正確に描画します。
-*   **PowerShell**: インストール作業を自動化するカスタムインストーラー。
+* **Browser History and Download Management**:
+* Track sites you've visited and revisit them any time.
+* Manage file downloads from the web and their history.
+* **Advanced Customization**:
+* **Search Engine**: Switch to your favorite search engine at any time, including Google, Bing, and DuckDuckGo.
+* **Theme Color**: Freely change the accent color of the application and enjoy your own design.
 
 ---
 
-## 🚀 インストールとセットアップ
+## 💻 Technology Stack
 
-IFoxerを利用するには、2つの方法があります。
+This project is built using a combination of the following technologies.
 
-### 方法1: インストーラーを使用する (推奨)
-
-最も簡単で推奨される方法です。
-
-1.  リリースページから最新の `installer.7z` をダウンロードし、解凍します。
-2.  解凍後のフォルダにある `install.ps1` を右クリックし、**[PowerShellで実行]** を選択します。
-    *   **注意**: スクリプトの実行がブロックされる場合、`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` をPowerShellで実行してから再度お試しください。
-3.  画面に表示されるウィザードに従い、インストール先やショートカットの作成などを設定します。
-4.  インストーラーが必要なコンポーネント（.NET 9 SDK, WebView2 Runtime）を自動で検出し、なければインストールを促します。
-
-### 方法2: ソースからビルドする (開発者向け)
-
-ソースコードから直接ビルドし、開発に参加することもできます。
-
-1.  **前提条件**: [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) をインストールします。
-2.  このリポジトリのソースコードを入手します。
-    *   **Gitを使用する場合**:
-        ```bash
-        git clone https://github.com/your-username/IFoxer.git
-        ```
-    *   **Gitを使用しない場合**:
-        このリポジトリのページ右上にある `Code` ボタンをクリックし、`Download ZIP` を選択してソースコードをダウンロードします。ダウンロード後、ZIPファイルを任意の場所に解凍してください。
-3.  プロジェクトのルートディレクトリで、以下のコマンドを実行してビルドします。
-    ```bash
-    dotnet build
-    ```
-4.  ビルドが成功すると、`bin/Debug/net9.0-windows/` ディレクトリ内に `IFoxer.exe` が生成されます。これを実行してください。
+* **C# 12 & .NET 9**: The latest C# and .NET framework that handles the core logic of the application.
+* **Windows Forms**: Builds the UI as a desktop application.
+* **Microsoft Edge WebView2**: A rendering engine based on Microsoft Edge (Chromium). It draws HTML, CSS, and JavaScript quickly and accurately.
+* **PowerShell**: A custom installer that automates the installation process.
 
 ---
 
-## 💡 基本的な使い方
+## 🚀 Installation and Setup
 
-*   **ナビゲーション**: 上部のアドレスバーにURLを入力してウェブサイトを閲覧します。戻る、進む、再読み込みボタンも利用できます。
-*   **設定**: 右上のメニューボタンから設定画面を開き、検索エンジンやテーマカラーの変更ができます。
-*   **ブックマーク追加**: アドレスバーの隣にある星マークのボタンを押すと、現在のページをブックマークに追加できます。
+There are two ways to use IFoxer.
+
+### Method 1: Use the installer (recommended)
+
+This is the easiest and recommended method.
+
+1. Download the latest `installer.7z` from the release page and unzip it.
+
+2. Right-click `install.ps1` in the unzipped folder and select **[Run with PowerShell]**.
+
+* **Note**: If the script execution is blocked, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` in PowerShell and try again.
+
+3. Follow the wizard displayed on the screen to set the installation destination, create shortcuts, etc.
+
+4. The installer automatically detects the required components (.NET 9 SDK, WebView2 Runtime) and prompts you to install them if they are not present.
+
+### Method 2: Build from source (for developers)
+
+You can also join the development by building directly from the source code.
+
+1. **Prerequisites**: Install [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0).
+
+2. Get the source code from this repository.
+
+* **If you use Git**:
+
+``bash
+
+git clone https://github.com/Dreeam00/gHost-Browser.git
+
+``
+
+* **If you don't use Git**:
+
+Click the `Code` button in the upper right corner of this repository page and select `Download ZIP` to download the source code. After downloading, unzip the ZIP file to a location of your choice.
+
+3. In the project root directory, run the following command to build.
+
+``bash
+
+dotnet build
+
+``
+
+4. If the build is successful, `IFoxer.exe` will be generated in the `bin/Debug/net9.0-windows/` directory. Run it.
 
 ---
 
-## 🤝 コントリビュート
+## 💡 Basic Usage
 
-このプロジェクトへの貢献を歓迎します！バグ報告、機能提案、プルリクエストなど、どんな形でも構いません。
-
-1.  改善したい点があれば、まずは **Issue** を立てて議論を開始してください。
-2.  フォークしてブランチを作成し (`git checkout -b feature/AmazingFeature`)、変更を加えます。
-3.  変更をコミットし (`git commit -m 'Add some AmazingFeature'`)、ブランチにプッシュします (`git push origin feature/AmazingFeature`)。
-4.  **Pull Request** を作成してください。
+* **Navigation**: Enter the URL in the address bar at the top to browse the website. Back, forward, and reload buttons are also available.
+* **Settings**: Open the settings screen from the menu button at the top right and change the search engine and theme color.
+* **Add Bookmark**: Press the star button next to the address bar to add the current page to your bookmarks.
 
 ---
 
-## 📜 ライセンス
+## 🤝 Contribute
 
-このプロジェクトは **MITライセンス** の下で公開されています。詳細については `LICENSE` ファイルをご覧ください。
+Contribute to this project! Bug reports, feature suggestions, pull requests, anything is welcome.
+
+1. If there is something you want to improve, start a discussion by opening an **Issue**.
+
+2. Fork and create a branch (`git checkout -b feature/AmazingFeature`) and make your changes.
+
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`) and push them to the branch (`git push origin feature/AmazingFeature`).
+4. Create a **Pull Request**.
