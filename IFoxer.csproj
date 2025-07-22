@@ -18,13 +18,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="installer\**" />
-    <Compile Remove="install test\**" />
-    <EmbeddedResource Remove="installer\**" />
-    <EmbeddedResource Remove="install test\**" />
-    <None Remove="installer\**" />
-    <None Remove="install test\**" />
-  </ItemGroup>
-
 </Project>

@@ -110,46 +110,6 @@ namespace IFoxer
             btnHome.Click += BtnHome_Click;
             panel2.Controls.Add(btnHome);
 
-            // --- 新機能ボタン追加 ---
-            Button btnVerticalTab = new Button
-            {
-                Text = "縦タブ",
-                Size = new Size(60, 30),
-                Location = new Point(btnSearch.Right + 5, btnSearch.Top),
-                FlatStyle = FlatStyle.Flat
-            };
-            btnVerticalTab.Click += (s, e) => {
-                var f = new VerticalTabForm();
-                f.Show();
-            };
-            panel2.Controls.Add(btnVerticalTab);
-
-            Button btnGadget = new Button
-            {
-                Text = "ガジェット",
-                Size = new Size(60, 30),
-                Location = new Point(btnVerticalTab.Right + 5, btnVerticalTab.Top),
-                FlatStyle = FlatStyle.Flat
-            };
-            btnGadget.Click += (s, e) => {
-                var f = new BrowserGadgetForm();
-                f.Show();
-            };
-            panel2.Controls.Add(btnGadget);
-
-            Button btnShortcut = new Button
-            {
-                Text = "ショートカット",
-                Size = new Size(80, 30),
-                Location = new Point(btnGadget.Right + 5, btnGadget.Top),
-                FlatStyle = FlatStyle.Flat
-            };
-            btnShortcut.Click += (s, e) => {
-                var f = new ShortcutLauncherForm();
-                f.Show();
-            };
-            panel2.Controls.Add(btnShortcut);
-
             // Application.Idleでマウス監視
             Application.Idle += Application_Idle;
         }
