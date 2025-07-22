@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFoxer</title>
+    <link rel="icon" type="image/png" href="IFoxer-Photoroom.png">
+    <style>
+        body {
+            background: #23232b;
+            color: #fff;
+            font-family: 'Segoe UI', 'Meiryo', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .center-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 60px;
+        }
+        .logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: #23232b;
+            box-shadow: 0 4px 24px #0006;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 24px 0;
+            letter-spacing: 2px;
+        }
+        .search-bar {
+            width: 420px;
+            max-width: 90vw;
+            background: #353542;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #0003;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            margin-bottom: 40px;
+        }
+        .search-bar input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 1.1rem;
+            padding: 18px 0;
+        }
+        .quick-links {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+        .quick-link {
+            background: #282834;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px #0004;
+            width: 90px;
+            height: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-bottom: 10px;
+        }
+        .quick-link:hover {
+            transform: translateY(-6px) scale(1.06);
+            box-shadow: 0 8px 24px #0006;
+        }
+        .quick-link-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .quick-link-icon img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+        .quick-link-label {
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 80px;
+        }
+        @media (max-width: 600px) {
+            .search-bar { width: 98vw; }
+            .quick-links { gap: 12px; }
+            .quick-link { width: 70px; height: 90px; }
+            .quick-link-label { width: 60px; font-size: 0.9rem; }
+            .logo { width: 64px; height: 64px; }
+            .logo img { width: 52px; height: 52px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="center-box">
+        <div class="logo">
+            <img src="IFoxer-Photoroom.png" alt="IFoxer ロゴ">
+        </div>
+        <h1>Interneter Foxer</h1>
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Bing で検索、または URL を入力します" onkeydown="if(event.key==='Enter'){search()}">
+            <select id="engineSelect" title="検索エンジン選択" style="margin-left:8px; background:#353542; color:#fff; border:none; border-radius:6px; font-size:1rem;">
+                <option value="bing">Bing</option>
+                <option value="google">Google</option>
+                <option value="yahoo">Yahoo!</option>
+            </select>
+        </div>
+        <button id="shortcutBtn" style="margin-top:10px; background:#353542; color:#fff; border:none; border-radius:8px; padding:8px 18px; font-size:1rem; cursor:pointer;">ショートカット一覧</button>
+        
+        <div class="quick-links" id="quickLinks"></div>
+        <button id="customizeBtn" style="margin-top:18px; background:#353542; color:#fff; border:none; border-radius:8px; padding:8px 18px; font-size:1rem; cursor:pointer;">クイックリンクをカスタマイズ</button>
+        <div id="customizeModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000a; z-index:1000; align-items:center; justify-content:center;">
+          <div style="background:#23232b; color:#fff; border-radius:16px; padding:32px; min-width:340px; max-width:95vw; box-shadow:0 8px 32px #0008;">
+            <h2 style="margin-top:0;">クイックリンクのカスタマイズ</h2>
+            <div id="linksEditList"></div>
+            <hr style="margin:18px 0; border:0; border-top:1px solid #444;">
+            <h3>新しいリンクを追加</h3>
+            <input id="newName" placeholder="サイト名" style="width:90px; margin-right:6px;">
+            <input id="newUrl" placeholder="URL" style="width:160px; margin-right:6px;">
+            <input id="newIcon" placeholder="アイコンURL" style="width:120px; margin-right:6px;">
+            <button onclick="addQuickLink()" style="background:#4caf50; color:#fff; border:none; border-radius:6px; padding:4px 12px;">追加</button>
+            <br><button onclick="closeCustomizeModal()" style="margin-top:18px; background:#353542; color:#fff; border:none; border-radius:8px; padding:6px 18px; font-size:1rem; cursor:pointer;">閉じる</button>
+          </div>
+        </div>
+        <div id="shortcutModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000a; z-index:1000; align-items:center; justify-content:center;">
+            <div style="background:#23232b; color:#fff; border-radius:16px; padding:32px; min-width:320px; max-width:90vw; box-shadow:0 8px 32px #0008;">
+                <h2 style="margin-top:0;">ショートカットキー一覧</h2>
+                <ul style="line-height:2;">
+                    <li><b>Ctrl + K</b>：検索ボックスにフォーカス</li>
+                    <li><b>Ctrl + 1〜9</b>：クイックリンクを開く</li>
+                    <li><b>Ctrl + H</b>：ホームに戻る</li>
+                    <li><b>Ctrl + Shift + S</b>：ショートカット一覧を表示</li>
+                </ul>
+                <button onclick="closeShortcutModal()" style="margin-top:16px; background:#353542; color:#fff; border:none; border-radius:8px; padding:6px 18px; font-size:1rem; cursor:pointer;">閉じる</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    function search() {
+        const input = document.getElementById('searchInput').value.trim();
+        const engine = document.getElementById('engineSelect').value;
+        let url = '';
+        if (input.match(/^https?:\/\//)) {
+            url = input;
+        } else if (input.match(/\./)) {
+            url = 'https://' + input;
+        } else {
+            if (engine === 'bing') {
+                url = 'https://www.bing.com/search?q=' + encodeURIComponent(input);
+            } else if (engine === 'google') {
+                url = 'https://www.google.com/search?q=' + encodeURIComponent(input);
+            } else if (engine === 'yahoo') {
+                url = 'https://search.yahoo.co.jp/search?p=' + encodeURIComponent(input);
+            }
+        }
+        if(url) window.open(url, '_blank');
+    }
+
+    // ショートカットモーダル
+    const shortcutBtn = document.getElementById('shortcutBtn');
+    const shortcutModal = document.getElementById('shortcutModal');
+    shortcutBtn.onclick = () => shortcutModal.style.display = 'flex';
+    function closeShortcutModal() { shortcutModal.style.display = 'none'; }
+
+    // キーボードショートカット
+    window.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+            document.getElementById('searchInput').focus();
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.key.toLowerCase() === 'h') {
+            location.reload();
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 's') {
+            shortcutModal.style.display = 'flex';
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.key >= '1' && e.key <= '9') {
+            const idx = parseInt(e.key, 10) - 1;
+            const links = document.querySelectorAll('.quick-link');
+            if (links[idx]) links[idx].click();
+            e.preventDefault();
+        }
+    });
+
+    // クイックリンクの初期データ
+    const defaultLinks = [
+      {name:'Amazon', url:'https://www.amazon.co.jp/', icon:'https://www.svgrepo.com/show/303128/amazon-icon-logo.svg'},
+      {name:'Temu', url:'https://www.temu.com/', icon:'https://seeklogo.com/images/T/temu-logo-6B0C0B6E5B-seeklogo.com.png'},
+      {name:'Expedia', url:'https://www.expedia.co.jp/', icon:'https://www.svgrepo.com/show/452091/expedia.svg'},
+      {name:'@google', url:'https://www.google.com/', icon:'https://www.svgrepo.com/show/475656/google-color.svg'},
+      {name:'YouTube', url:'https://www.youtube.com/', icon:'https://www.svgrepo.com/show/475656/youtube-color.svg'},
+      {name:'Microsoft Copilot', url:'https://copilot.microsoft.com/', icon:'https://static-00.iconduck.com/assets.00/microsoft-copilot-icon-2048x2048-2k1v7w7d.png'},
+      {name:'BrowserBench', url:'https://browserbench.org/', icon:'https://www.svgrepo.com/show/354202/speedometer.svg'},
+      {name:'文字化けツール', url:'https://www.ignaga.com/tool/mojika.html', icon:'https://www.ignaga.com/favicon.ico'}
+    ];
+
+    function getLinks() {
+      return JSON.parse(localStorage.getItem('quickLinks')||'null') || defaultLinks;
+    }
+    function setLinks(links) {
+      localStorage.setItem('quickLinks', JSON.stringify(links));
+    }
+    function renderLinks() {
+      const links = getLinks();
+      const box = document.getElementById('quickLinks');
+      box.innerHTML = links.map((l,i)=>
+        `<a class="quick-link" href="${l.url}" target="_blank" rel="noopener">
+          <span class="quick-link-icon"><img src="${l.icon}" alt="${l.name}"></span>
+          <span class="quick-link-label">${l.name}</span>
+        </a>`
+      ).join('');
+    }
+    renderLinks();
+
+    // カスタマイズUI
+    const customizeBtn = document.getElementById('customizeBtn');
+    const customizeModal = document.getElementById('customizeModal');
+    customizeBtn.onclick = () => { renderEditList(); customizeModal.style.display = 'flex'; };
+    function closeCustomizeModal() { customizeModal.style.display = 'none'; }
+
+    function renderEditList() {
+      const links = getLinks();
+      const list = document.getElementById('linksEditList');
+      list.innerHTML = links.map((l,i)=>
+        `<div style='margin-bottom:8px;'>
+          <input value="${l.name}" style="width:90px;" onchange="editLink(${i},'name',this.value)">
+          <input value="${l.url}" style="width:160px;" onchange="editLink(${i},'url',this.value)">
+          <input value="${l.icon}" style="width:120px;" onchange="editLink(${i},'icon',this.value)">
+          <button onclick="removeLink(${i})" style="background:#e53935; color:#fff; border:none; border-radius:6px; padding:2px 10px; margin-left:4px;">削除</button>
+        </div>`
+      ).join('');
+    }
+    function editLink(i, key, val) {
+      const links = getLinks();
+      links[i][key] = val;
+      setLinks(links);
+      renderLinks();
+    }
+    function removeLink(i) {
+      const links = getLinks();
+      links.splice(i,1);
+      setLinks(links);
+      renderEditList();
+      renderLinks();
+    }
+    function addQuickLink() {
+      const name = document.getElementById('newName').value.trim();
+      const url = document.getElementById('newUrl').value.trim();
+      const icon = document.getElementById('newIcon').value.trim();
+      if(!name||!url||!icon) return alert('全て入力してください');
+      const links = getLinks();
+      links.push({name,url,icon});
+      setLinks(links);
+      renderEditList();
+      renderLinks();
+      document.getElementById('newName').value = '';
+      document.getElementById('newUrl').value = '';
+      document.getElementById('newIcon').value = '';
+    }
+    </script>
+</body>
+</html>
